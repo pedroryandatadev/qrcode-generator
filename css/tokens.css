@@ -1,0 +1,22 @@
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:       #0f0f0f;
+  --surface:  #1a1a1a;
+  --surface2: #242424;
+  --surface3: #2e2e2e;
+  --input-bg: #1e1e1e;
+
+  --border:  rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+
+  --text:  #f0ede8;
+  --text2: #9a9690;
+  --text3: #6a6660;
+
+  --accent:  #e8d5b0;
+  --accent2: #c8a96e;
+
+  --radius:    12px;
+  --radius-sm:  8px;
+}

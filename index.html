@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR Code Generator</title>
+  <link rel="stylesheet" href="css/tokens.css">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/form.css">
+  <link rel="stylesheet" href="css/preview.css">
+  <link rel="stylesheet" href="css/lang.css">
+</head>
+<body>
+
+<header>
+  <h1>QR Generator</h1>
+
+  <div class="lang-dropdown" id="lang-dropdown">
+    <button class="lang-btn" id="lang-btn">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"/>
+        <line x1="2" y1="12" x2="22" y2="12"/>
+        <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/>
+      </svg>
+      <span id="lang-label">English</span>
+      <svg class="lang-chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="6 9 12 15 18 9"/>
+      </svg>
+    </button>
+    <div class="lang-menu" id="lang-menu"></div>
+  </div>
+</header>
+
+<div class="app">
+
+  <div class="panel-left">
+
+    <div class="tabs">
+      <button class="tab active" onclick="switchTab('link')" data-i18n="tab_link">Link / Text</button>
+      <button class="tab"        onclick="switchTab('pix')"  data-i18n="tab_pix">Pix</button>
+      <button class="tab"        onclick="switchTab('wifi')" data-i18n="tab_wifi">Wi-Fi</button>
+    </div>
+
+    <div class="tab-content active" id="tab-link">
+      <div class="field">
+        <label data-i18n="link_label">URL or text</label>
+        <input type="text" id="link-data" data-i18n-ph="link_placeholder" placeholder="https://yoursite.com">
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-pix">
+      <div class="field">
+        <label data-i18n="pix_key_label">Pix Key</label>
+        <input type="text" id="pix-chave" data-i18n-ph="pix_key_placeholder" placeholder="email, CPF, phone or random key">
+      </div>
+      <div class="field">
+        <label data-i18n="pix_amount_label">Amount (optional)</label>
+        <input type="text" id="pix-valor" placeholder="0.00">
+      </div>
+    </div>
+
+    <div class="tab-content" id="tab-wifi">
+      <div class="field">
+        <label data-i18n="wifi_ssid_label">Network name (SSID)</label>
+        <input type="text" id="wifi-ssid" data-i18n-ph="wifi_ssid_placeholder" placeholder="MyNetwork_5G">
+      </div>
+      <div class="field">
+        <label data-i18n="wifi_pass_label">Password</label>
+        <input type="text" id="wifi-pass" data-i18n-ph="wifi_pass_placeholder" placeholder="password123">
+      </div>
+      <div class="field">
+        <label data-i18n="wifi_sec_label">Security type</label>
+        <select id="wifi-sec">
+          <option value="WPA"    data-i18n="wifi_sec_wpa">WPA / WPA2</option>
+          <option value="WEP">WEP</option>
+          <option value="nopass" data-i18n="wifi_sec_none">No password</option>
+        </select>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-group">
+      <div class="section-label" data-i18n="section_appearance">Appearance</div>
+      <div class="row">
+        <div class="field">
+          <label data-i18n="color_fg_label">QR color</label>
+          <div class="color-row">
+            <div class="color-swatch"><input type="color" id="color-fg" value="#000000"></div>
+            <input type="text" class="color-hex" id="hex-fg" value="#000000" maxlength="7">
+          </div>
+        </div>
+        <div class="field">
+          <label data-i18n="color_bg_label">Background color</label>
+          <div class="color-row">
+            <div class="color-swatch"><input type="color" id="color-bg" value="#ffffff"></div>
+            <input type="text" class="color-hex" id="hex-bg" value="#ffffff" maxlength="7">
+          </div>
+        </div>
+      </div>
+      <div class="field">
+        <label data-i18n="size_label">Size</label>
+        <div class="range-row">
+          <input type="range" id="qr-size" min="150" max="400" value="240" step="10">
+          <span class="range-val" id="size-val">240px</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-group">
+      <div class="section-label" data-i18n="section_logo">Center logo (optional)</div>
+      <div class="upload-area" onclick="document.getElementById('logo-input').click()">
+        <div class="upload-icon">⊕</div>
+        <p data-i18n="upload_hint">Click to select an image</p>
+        <div class="upload-name" id="logo-name"></div>
+        <input type="file" id="logo-input" accept="image/*" style="display:none">
+      </div>
+      <button class="btn-secondary" onclick="removeLogo()" id="remove-logo-btn" style="display:none" data-i18n="remove_logo">Remove logo</button>
+      <div class="field" id="logo-size-field" style="display:none">
+        <label data-i18n="logo_size_label">Logo size</label>
+        <div class="range-row">
+          <input type="range" id="logo-size" min="20" max="35" value="25" step="1">
+          <span class="range-val" id="logo-size-val">25%</span>
+        </div>
+      </div>
+    </div>
+
+    <hr class="divider">
+
+    <div class="section-group">
+      <div class="section-label" data-i18n="section_label_text">Label below (optional)</div>
+      <div class="field">
+        <input type="text" id="qr-label" data-i18n-ph="label_placeholder" placeholder="e.g. @myprofile" maxlength="50">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="panel-right">
+    <div class="preview-label" data-i18n="preview_label">preview</div>
+
+    <div class="preview-wrap">
+      <div class="qr-canvas-wrap is-empty" id="qr-canvas-wrap">
+        <div id="qr-container">
+          <div class="empty-qr">
+            <p data-i18n="empty_state">Fill in the form to generate a QR Code</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="preview-meta" id="preview-meta">—</div>
+
+    <div class="actions">
+      <button class="btn-download" onclick="downloadQR()" data-i18n="btn_download">Download PNG</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="vendor/qrcode.min.js"></script>
+<script src="js/translations.js"></script>
+<script src="js/i18n.js"></script>
+<script src="js/payloads.js"></script>
+<script src="js/renderer.js"></script>
+<script src="js/langMenu.js"></script>
+<script src="js/preview.js"></script>
+<script src="js/form.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>

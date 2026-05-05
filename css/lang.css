@@ -1,0 +1,93 @@
+.lang-dropdown {
+  margin-left: auto;
+  position: relative;
+}
+
+.lang-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 0.35rem 0.75rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text2);
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.lang-btn:hover { border-color: var(--border2); color: var(--accent); background: var(--surface3); }
+.lang-btn svg   { opacity: 0.6; flex-shrink: 0; }
+
+.lang-chevron {
+  width: 10px;
+  height: 10px;
+  opacity: 0.5;
+  transition: transform 0.18s ease;
+  flex-shrink: 0;
+}
+
+.lang-dropdown.open .lang-chevron { transform: rotate(180deg); }
+.lang-dropdown.open .lang-btn     { border-color: var(--border2); color: var(--accent); background: var(--surface3); }
+
+.lang-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 150px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  overflow: hidden;
+  z-index: 100;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.lang-dropdown.open .lang-menu { display: block; }
+
+.lang-option {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 0.6rem 0.9rem;
+  background: transparent;
+  border: none;
+  color: var(--text2);
+  font-family: ui-monospace, 'Courier New', monospace;
+  font-size: 0.78rem;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.12s, color 0.12s;
+  border-bottom: 1px solid var(--border);
+}
+
+.lang-option:last-child              { border-bottom: none; }
+.lang-option:hover                   { background: var(--surface3); color: var(--text); }
+.lang-option.active                  { color: var(--accent); }
+.lang-option.active .lang-opt-check { opacity: 1; }
+
+.lang-flag     { font-size: 14px; line-height: 1; flex-shrink: 0; }
+.lang-opt-name { flex: 1; }
+
+.lang-opt-code {
+  font-size: 0.68rem;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+
+.lang-opt-check {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.12s;
+}
