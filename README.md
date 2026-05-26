@@ -107,7 +107,7 @@ QR Code generation powered by [QRCode.js](https://github.com/davidshimjs/qrcodej
 ## License
 
 ```
-Development in 2026 by pedroryandatadev
+Development in 2026 by RyanCarneiroDev
 
 This project is licensed under the MIT License. See the LICENSE file for more information.
 ```
